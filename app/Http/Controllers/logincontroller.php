@@ -8,18 +8,19 @@ use Illuminate\Support\Facades\Auth;
 class logincontroller extends Controller
 {
     //
-    public function authenticate(Request $request){
+    public function authenticate(Request $request)
+    {
         $data = $request->validate([
-            'email'     => ['required','email'],
+            'email'     => ['required', 'email'],
             'password'  => ['required']
         ]);
-        if(Auth::attempt($data)){
+        if (Auth::attempt($data)) {
             $request->session()->regenerate();
             return redirect()->intended('dashboard');
         }
         //tampilkan pesan error jika gagal login
         return back()->withErrors([
-            'email' => 'informasi Kredensial yang dimasukkan tidak cocok'
+            'email' => 'email tidak cocok'
         ])->onlyInput('email');
     }
 }
